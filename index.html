@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>English-Vietnamese Alphabet</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .flashcard {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            position: relative;
+            perspective: 1000px;
+            display: inline-block;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .flipped .card {
+            transform: rotateY(180deg);
+        }
+
+        .face {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 18px;
+        }
+
+        .front {
+            background-color: #f8f8f8;
+        }
+
+        .back {
+            background-color: #f0f0f0;
+            transform: rotateY(180deg);
+        }
+
+        .flip-icon {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            color: black;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="title">English-Vietnamese Alphabet</h1>
+
+    <div id="flashcards">
+        <!-- Flashcards will be generated here -->
+    </div>
+
+    <audio id="pronunciation-audio"></audio>
+
+    <script>
+        var englishAlphabet = [
+            { letter: 'A', pronunciation: 'E' },
+            { letter: 'B', pronunciation: 'Bê' },
+            { letter: 'C', pronunciation: 'Xê' },
+            { letter: 'D', pronunciation: 'Đê' },
+            { letter: 'E', pronunciation: 'I' },
+            { letter: 'F', pronunciation: 'Ép' },
+            { letter: 'G', pronunciation: 'Zi' },
+            { letter: 'H', pronunciation: 'Hắt' },
+            { letter: 'I', pronunciation: 'Ai' },
+            { letter: 'J', pronunciation: 'Đi' },
+            { letter: 'K', pronunciation: 'Ca' },
+            { letter: 'L', pronunciation: 'Él' },
+            { letter: 'M', pronunciation: 'Em' },
+            { letter: 'N', pronunciation: 'En' },
+            { letter: 'O', pronunciation: 'Ô' },
+            { letter: 'P', pronunciation: 'Pi' },
+            { letter: 'Q', pronunciation: 'Kiu' },
+            { letter: 'R', pronunciation: 'A' },
+            { letter: 'S', pronunciation: 'Ét' },
+            { letter: 'T', pronunciation: 'Tê' },
+            { letter: 'U', pronunciation: 'Iu' },
+            { letter: 'V', pronunciation: 'Vê' },
+            { letter: 'W', pronunciation: 'Đập-lyu' },
+            { letter: 'X', pronunciation: 'Éc' },
+            { letter: 'Y', pronunciation: 'Uai' },
+            { letter: 'Z', pronunciation: 'Zét' }
+        ];
+
+        var flashcardsContainer = document.getElementById('flashcards');
+
+        englishAlphabet.forEach(function(card) {
+            var flashcard = document.createElement('div');
+            flashcard.className = 'flashcard';
+
+            var cardElement = document.createElement('div');
+            cardElement.className = 'card';
+
+            var front = document.createElement('div');
+            front.className = 'face front';
+            front.textContent = card.letter;
+            front.addEventListener('click', function() {
+                pronounceSound(card.letter, 'en');
+            });
+
+            var flipIconFront = document.createElement('i');
+            flipIconFront.className = 'flip-icon fas fa-sync-alt';
+            flipIconFront.addEventListener('click', function() {
+                flashcard.classList.toggle('flipped');
+            });
+
+            var back = document.createElement('div');
+            back.className = 'face back';
+            back.textContent = card.pronunciation;
+            back.addEventListener('click', function() {
+                pronounceSound(card.pronunciation, 'vi');
+            });
+
+            var flipIconBack = document.createElement('i');
+            flipIconBack.className = 'flip-icon fas fa-sync-alt';
+            flipIconBack.addEventListener('click', function() {
+                flashcard.classList.toggle('flipped');
+            });
+
+            front.appendChild(flipIconFront);
+            back.appendChild(flipIconBack);
+            cardElement.appendChild(front);
+            cardElement.appendChild(back);
+            flashcard.appendChild(cardElement);
+            flashcardsContainer.appendChild(flashcard);
+        });
+
+        function pronounceSound(sound, lang) {
+            var audioElement = document.getElementById('pronunciation-audio');
+            audioElement.setAttribute('src', 'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=' + sound + '&tl=' + lang + '&textlen=' + sound.length);
+            audioElement.play();
+        }
+    </script>
+</body>
+</html>
+
+
