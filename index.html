@@ -94,57 +94,58 @@
             { letter: 'X', pronunciation: 'Éc' },
             { letter: 'Y', pronunciation: 'Uai' },
             { letter: 'Z', pronunciation: 'Zét' }
-            ];
+        ];
 
-var flashcardsContainer = document.getElementById('flashcards');
+        var flashcardsContainer = document.getElementById('flashcards');
 
-englishAlphabet.forEach(function(card) {
-    var flashcard = document.createElement('div');
-    flashcard.className = 'flashcard';
+        englishAlphabet.forEach(function(card) {
+            var flashcard = document.createElement('div');
+            flashcard.className = 'flashcard';
 
-    var cardElement = document.createElement('div');
-    cardElement.className = 'card';
+            var cardElement = document.createElement('div');
+            cardElement.className = 'card';
 
-    var front = document.createElement('div');
-    front.className = 'face front';
-    front.textContent = card.letter;
+            var front = document.createElement('div');
+            front.className = 'face front';
+            front.textContent = card.letter;
+            front.addEventListener('click', function() {
+                pronounceSound(card.letter, 'en');
+            });
 
-    var flipIconFront = document.createElement('i');
-    flipIconFront.className = 'flip-icon fas fa-sync-alt';
-    flipIconFront.addEventListener('click', function() {
-        flashcard.classList.toggle('flipped');
-    });
+            var flipIconFront = document.createElement('i');
+            flipIconFront.className = 'flip-icon fas fa-sync-alt';
+            flipIconFront.addEventListener('click', function() {
+                flashcard.classList.toggle('flipped');
+            });
 
-    var back = document.createElement('div');
-    back.className = 'face back';
-    back.textContent = card.pronunciation;
+            var back = document.createElement('div');
+            back.className = 'face back';
+            back.textContent = card.pronunciation;
+            back.addEventListener('click', function() {
+                pronounceSound(card.pronunciation, 'vi');
+            });
 
-    var flipIconBack = document.createElement('i');
-    flipIconBack.className = 'flip-icon fas fa-sync-alt';
-    flipIconBack.addEventListener('click', function() {
-        flashcard.classList.toggle('flipped');
-    });
+            var flipIconBack = document.createElement('i');
+            flipIconBack.className = 'flip-icon fas fa-sync-alt';
+            flipIconBack.addEventListener('click', function() {
+                flashcard.classList.toggle('flipped');
+            });
 
-    var pronounceButton = document.createElement('button');
-    pronounceButton.textContent = 'Pronounce';
-    pronounceButton.addEventListener('click', function() {
-        pronounceSound(card.pronunciation, 'vi');
-    });
+            front.appendChild(flipIconFront);
+            back.appendChild(flipIconBack);
+            cardElement.appendChild(front);
+            cardElement.appendChild(back);
+            flashcard.appendChild(cardElement);
+            flashcardsContainer.appendChild(flashcard);
+        });
 
-    front.appendChild(flipIconFront);
-    back.appendChild(flipIconBack);
-    back.appendChild(pronounceButton);
-    cardElement.appendChild(front);
-    cardElement.appendChild(back);
-    flashcard.appendChild(cardElement);
-    flashcardsContainer.appendChild(flashcard);
-});
-
-function pronounceSound(sound, lang) {
-    var audioElement = document.getElementById('pronunciation-audio');
-    audioElement.setAttribute('src', 'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=' + sound + '&tl=' + lang + '&textlen=' + sound.length);
-    audioElement.play();
-}
-</script>
+        function pronounceSound(sound, lang) {
+            var audioElement = document.getElementById('pronunciation-audio');
+            audioElement.setAttribute('src', 'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=' + sound + '&tl=' + lang + '&textlen=' + sound.length);
+            audioElement.play();
+        }
+    </script>
 </body>
 </html>
+
+
